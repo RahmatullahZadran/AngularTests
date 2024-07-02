@@ -1,25 +1,28 @@
 <div class="container">
     <div class="filters">
-      <a class="button">Heads</a>
-      <a class="button">Arms</a>
-      <a class="button">Torsos</a>
-      <a class="button">Bases</a>
-      <a class="button">All</a>
+      <a (click)="filter = 'Heads'" class="button ">Heads</a>
+      <a (click)="filter = 'Arms'" class="button">Arms</a>
+      <a (click)="filter = 'Torsos'" class="button">Torsos</a>
+      <a (click)="filter = 'Bases'" class="button">Bases</a>
+      <a (click)="filter = ''" class="button">All</a>
     </div>
   
     <ul class="products">
-      <li class="product-item" *ngFor="let product of products">
+      <li class="product-item" *ngFor="let product of getFilteredProdcuts()">
         <div class="product">
           <div class="product-details">
-            <img [src]="getImageUrl(product)" [alt]="product.name" />
+            <img [src]="getImageUrl(product)" [alt]="product?.name" />
             <div class="product-info">
-              <div class="name">{{ product.name }}</div>
-              <div class="description">{{ product.description }}</div>
-              <div class="category">Part Type: {{ product.category }}</div>
+              <div class="name">{{ product?.name }}</div>
+              <div class="description">{{ product?.description }}</div>
+              <div class="category">Part Type: {{ product?.category }}</div>
             </div>
           </div>
           <div class="price">
-            <div>{{ product.price.toFixed(2) | currency : "USD" }}</div>
+            <div  [ngClass] ="getDiscountedClasses(product)">{{ product?.price | currency : "USD" }}</div>
+            <div *ngIf="product?.discount > 0" class ="discount" >
+              {{(product.price *(1 - product.discount)) | currency : "USD"}}
+            </div>
             <button class="cta">Buy</button>
           </div>
         </div>

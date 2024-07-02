@@ -7,7 +7,8 @@ import { IProduct } from '../catalog/product.model';
   styleUrls: ['./catalog.component.css']
 })
 export class CatalogComponent {
- products : IProduct[];
+ products :any;
+ filter: string = '';
 
 
  constructor() {
@@ -187,12 +188,26 @@ export class CatalogComponent {
       },
     ];
  }
+
+ getDiscountedClasses(product: IProduct){
+  if (product?.discount > 0) 
+    return 'strikethrough bold';
+  else
+    return '';
+ }
  
  
 
 
- getImageUrl(product: IProduct) {
+ getImageUrl(product: any) {
+  if (!product) return '';
   return '/assets/images/robot-parts/' + product.imageName;
+ }
+
+ getFilteredProdcuts() {
+   return this.filter === ''
+   ? this.products
+   :this.products.filter((product: any) => product.category === this.filter);
  }
 
 }
