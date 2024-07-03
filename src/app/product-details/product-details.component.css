@@ -1,4 +1,7 @@
-.product {
+
+  
+  /* Product Details */
+  .product {
     display: flex;
     justify-content: space-between;
     padding: 20px 25px;
